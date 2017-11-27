@@ -1,0 +1,9 @@
+1|MACRO #a1, #a2, #a3
+2|			LD #a1, A
+3|			LD #a2, B
+4|			LD #a3, C
+5|MACRO #a4, #a5
+6|			PUSH #a4
+7|			PUSH #a5
+8|			POP #a4
+9|			POP #a5
