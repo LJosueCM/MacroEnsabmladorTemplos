@@ -5,6 +5,8 @@ import sys
 pos_macro = 0
 #Contador que guarda las lineas del que hay en em MDT
 cont_MDT = 0
+#Contador de la cantidad de lineas en MNT
+cont_MNT = 1
 
 #Funcion que busca conincidencias con la palabra MACRO y MEND
 def Ver_Macro(linea):
@@ -21,12 +23,15 @@ def Ver_Macro(linea):
 		if linea[i:i+4] == "MEND":
 			return 2
 
-def CopiarMacro(linea,archivo_e,archivo_MDT):
+#Funcion que copia la macro en MDT
+def CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT):
 	#Se declaran las variables globales para poder utilizarlas en la funcion
 	global cont_MDT
 	global pos_macro
 	#Se aumenta el contador de linas del documento MDT
 	cont_MDT += 1
+
+	NombMacro(linea, cont_MDT, archivo_MNT)
 	#Se transforma en cadena el contador para poder escribirla
 	aux=str(cont_MDT)
 	#Se escribe en MDT
@@ -43,8 +48,25 @@ def CopiarMacro(linea,archivo_e,archivo_MDT):
 		archivo_MDT.write(aux+"|"+linea)
 		linea = archivo_e.readline()
 		op=Ver_Macro(linea)
-		
 
+#Funcion para crear la tabla MNT		
+def NombMacro(linea, cont_MDT, archivo_MNT):
+	#Declaracíon para poder utilizar MNT y pos_macro
+	global cont_MNT
+	global pos_macro
+	#Se toma la parte de la cadena donde viene el nombre
+	linea = linea[0:pos_macro]
+	#Se quitan los : y los espacios en blanco
+	linea = linea.replace(" ", "")
+	linea = linea.replace(":", "")
+	linea = linea.replace("\t", "")
+	#SE convierte el contador en cadena para poder escribirla
+	aux=str(cont_MNT)
+	cMDT=str(cont_MDT)
+	#Se escribe la macro en la tabla
+	archivo_MNT.write(aux+"|"+linea+"|"+cMDT+"|\n")
+	#Aumentamos el contador para la siguiente linea
+	cont_MNT += 1
 
 #Comprobación de el ingreso de el archivo de entrada
 if len(sys.argv) == 2:
@@ -58,16 +80,19 @@ if len(sys.argv) == 2:
 
 	#Archivo que contiene las macro definiciones
 	archivo_MDT = open("MDT.txt", "w")
+	#Archivo donde esta la tabla con los nombres de las macro definiciones
+	archivo_MNT = open("MNT.txt", "w")
 
 	#Se lee cada linea en el archivo
 	for linea in archivo_e:
 		#Se manda esa linea a que se revise
 		op=Ver_Macro(linea)
 		if op == 1:
-			CopiarMacro(linea,archivo_e,archivo_MDT)
+			CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT)
 
 	#Cierre de archivos
 	archivo_MDT.close()
+	archivo_MNT.close()
 	archivo_e.close()
 else:
 	#Mensaje de error si no se ingresa el archivo
