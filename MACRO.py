@@ -13,15 +13,17 @@ def Ver_Macro(linea):
 	#Declaracion de la variable global para utilizarla
 	global pos_macro
 	#Se busca en la linea si está escrita la palabra MACRO
-	for i in range(0, len(linea)-5):
-		if linea[i:i+5] == "MACRO":
-			pos_macro = i
-			return 1
+	encont = linea.find("MACRO")
+	#Si find regresa un -1 es que no está en la linea
+	if encont != -1:
+		pos_macro = encont
+		return 1
 
 	#Se busca si en la linea se ha escrito un MEND
-	for i in range(0,len(linea)-4):
-		if linea[i:i+4] == "MEND":
-			return 2
+	encont = linea.find("MEND")
+	#Si find regresa un -1 es que no está en la linea
+	if encont != -1:
+		return 2
 
 #Funcion que copia la macro en MDT
 def CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT):
@@ -38,6 +40,7 @@ def CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT):
 	archivo_MDT.write(aux+"|"+linea[pos_macro:])
 	#Se lee otra linea del archivo
 	linea = archivo_e.readline()
+
 	#Verificamos si se encuentra en MEND
 	op=Ver_Macro(linea)
 	
