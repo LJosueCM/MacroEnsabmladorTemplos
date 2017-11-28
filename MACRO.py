@@ -32,9 +32,10 @@ def Ver_Macro(linea):
 		return 2
 
 #Función que cambia las referencias de los argumentos
-def BusqALA(linea, archivo_ALA):
+def BusqALA(linea):
 	#Se hace global para que se pueda ocupar en la funcion
 	global dic_arg
+	global archivo_ALA
 	#Se verifica en que posicion se encuentra el primer #
 	pos = linea.find("#")
 	#Si hay argumentos en la linea se continua
@@ -66,19 +67,23 @@ def BusqALA(linea, archivo_ALA):
 		return linea
 
 #Funcion que copia la macro en MDT
-def CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT, archivo_ALA):
+def CopiarMacro(linea):
 	#Se declaran las variables globales para poder utilizarlas en la funcion
 	global cont_MDT
 	global pos_macro
 	global dic_arg
+	global archivo_e
+	global archivo_MDT
+	global archivo_MNT
+	global archivo_ALA
 	#Se aumenta el contador de linas del documento MDT
 	cont_MDT += 1
 	#Se mandan los argumentos a la tbala
-	Argumentos(linea, archivo_ALA)
+	Argumentos(linea)
 	#Se manda el nombre a la tabla de MNT
-	NombMacro(linea, cont_MDT, archivo_MNT)
+	NombMacro(linea)
 	#Se pasa la linea por la funcion de busqueda para sustituir # por & y la posicion del arg en la ALA
-	linea = BusqALA(linea, archivo_ALA)
+	linea = BusqALA(linea)
 	#Se transforma en cadena el contador para poder escribirla
 	aux=str(cont_MDT)
 	#Se escribe en MDT
@@ -113,11 +118,13 @@ def CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT, archivo_ALA):
 	dic_arg={}
 
 #Funcion para crear la tabla MNT		
-def NombMacro(linea, cont_MDT, archivo_MNT):
+def NombMacro(linea):
 	#Declaracíon para poder utilizar MNT y pos_macro
 	global cont_MNT
 	global pos_macro
 	global cont_ALA_i
+	global cont_MDT
+	global archivo_MNT
 	#Se toma la parte de la cadena donde viene el nombre
 	linea = linea[0:pos_macro]
 	#Se quitan los : y los espacios en blanco
@@ -133,10 +140,11 @@ def NombMacro(linea, cont_MDT, archivo_MNT):
 	#Aumentamos el contador para la siguiente linea
 	cont_MNT += 1
 
-def Argumentos(linea, archivo_ALA):
+def Argumentos(linea):
 	#Declaracion del contador para poderlo ocupar en la función
 	global cont_ALA
 	global cont_ALA_i
+	global archivo_ALA
 	#Al momento de entrar se va a guardar la dir donde inicia los argumentos
 	cont_ALA_i = cont_ALA
 	#Se busca la posicion donde esta la primera instancia de #
@@ -183,7 +191,7 @@ if len(sys.argv) == 2:
 		#Se manda esa linea a que se revise
 		op=Ver_Macro(linea)
 		if op == 1:
-			CopiarMacro(linea,archivo_e,archivo_MDT, archivo_MNT, archivo_ALA)
+			CopiarMacro(linea)
 
 	#Cierre de archivos
 	archivo_MDT.close()
