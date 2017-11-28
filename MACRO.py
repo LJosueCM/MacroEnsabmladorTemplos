@@ -14,12 +14,13 @@ cont_ALA_i = 0
 #Se crea un diccionario para los argumentos
 dic_arg = {}
 
-encontaux=0
+enaux=0
 
 #Funcion que busca conincidencias con la palabra MACRO y MEND
 def Ver_Macro(linea):
 	#Declaracion de la variable global para utilizarla
 	global pos_macro
+	global enaux
     
     
 
@@ -29,17 +30,27 @@ def Ver_Macro(linea):
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		pos_macro = encont
+		enaux=1
 		return 1
-    else: 
-        encontaux=linea.find("MEND")
-        if encontaux ==-1: 
-            print(">>ERROR: MACRO no encontrada")
+	else: 
+		print("ERROR: MACRO no declarada")
+		sys.exit(0)
+    
 
 	#Se busca si en la linea se ha escrito un MEND
 	encont = linea.find("MEND")
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		return 2
+
+	if enaux==1: 
+
+		print("ERROR: MEND no declarada")
+	else: 
+
+		print("ERROR: MACRO no declarada")
+		sys.exit(0)
+
     
 
 #Función que cambia las referencias de los argumentos
