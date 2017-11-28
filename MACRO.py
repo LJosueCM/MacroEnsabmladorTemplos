@@ -14,22 +14,33 @@ cont_ALA_i = 0
 #Se crea un diccionario para los argumentos
 dic_arg = {}
 
+encontaux=0
+
 #Funcion que busca conincidencias con la palabra MACRO y MEND
 def Ver_Macro(linea):
 	#Declaracion de la variable global para utilizarla
 	global pos_macro
+    
+    
+
+
 	#Se busca en la linea si está escrita la palabra MACRO
 	encont = linea.find("MACRO")
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		pos_macro = encont
 		return 1
+    else: 
+        encontaux=linea.find("MEND")
+        if encontaux ==-1: 
+            print(">>ERROR: MACRO no encontrada")
 
 	#Se busca si en la linea se ha escrito un MEND
 	encont = linea.find("MEND")
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		return 2
+    
 
 #Función que cambia las referencias de los argumentos
 def BusqALA(linea):
