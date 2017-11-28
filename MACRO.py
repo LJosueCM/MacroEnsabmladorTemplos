@@ -193,9 +193,9 @@ def Argumentos(linea):
 
 #Comprobación de el ingreso de el archivo de entrada
 if len(sys.argv) == 2:
-    if sys.argv[1].find(".ASM")==-1:
-        print(">>ERROR en extensión")
-        sys.close(0)
+	if sys.argv[1].find(".ASM")==-1:
+		print(">>ERROR en extensión")
+		sys.exit(0)
 	#Se ttrata la excepcion si no existe el archivo
 	try:
 		#Apertura del archivo
@@ -208,7 +208,10 @@ if len(sys.argv) == 2:
 	archivo_MDT = open("MDT.txt", "w")
 	#Archivo donde esta la tabla con los nombres de las macro definiciones
 	archivo_MNT = open("MNT.txt", "w")
-	#Archivo donde se encuentran los argumentos de las macros
+	#Se crea el archivo ALA
+	archivo_ALA = open("ALA.txt", "w")
+	archivo_ALA.close()
+	#Se hace para poder manejar el archivo de escritura y de lectura
 	archivo_ALA = open("ALA.txt", "r+")
 
 	#Se lee cada linea en el archivo
