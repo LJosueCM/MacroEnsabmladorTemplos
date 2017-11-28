@@ -163,6 +163,9 @@ def Argumentos(linea, archivo_ALA):
 
 #Comprobación de el ingreso de el archivo de entrada
 if len(sys.argv) == 2:
+    if sys.argv[1].find(".ASM")==-1:
+        print(">>ERROR en extensión")
+        sys.close(0)
 	#Se ttrata la excepcion si no existe el archivo
 	try:
 		#Apertura del archivo
