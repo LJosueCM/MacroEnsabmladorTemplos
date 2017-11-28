@@ -32,9 +32,7 @@ def Ver_Macro(linea):
 		pos_macro = encont
 		enaux=1
 		return 1
-	else: 
-		print("ERROR: MACRO no declarada")
-		sys.exit(0)
+	
     
 
 	#Se busca si en la linea se ha escrito un MEND
