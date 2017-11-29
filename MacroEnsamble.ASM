@@ -1,0 +1,11 @@
+INICIO:	LD A, (10H)
+		INC A
+		CARGA E, H, L
+		ADD A, E
+		SLA B
+		CAMBIA AF, BC
+		DEC C
+		CARGA (200H), (IX), (HL)
+		CAMBIA HL, DE
+		HALT
+		END INICIO
