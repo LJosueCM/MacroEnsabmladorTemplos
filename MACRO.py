@@ -22,34 +22,36 @@ def Ver_Macro(linea):
 	global pos_macro
 	global enaux
     
-    
-
-
 	#Se busca en la linea si está escrita la palabra MACRO
 	encont = linea.find("MACRO")
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		pos_macro = encont
+		#MArcamos la bandera de que se encontró MACRO
 		enaux=1
 		return 1
 	
-    
-
 	#Se busca si en la linea se ha escrito un MEND
 	encont = linea.find("MEND")
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
+<<<<<<< HEAD
 		return 2
 	else:
 		if enaux==1: 
 			print("ERROR: MEND no declarada")
 		else: 
+=======
+		#Se verifica que antes se haya declarado MEND
+		if enaux != 1:  
+>>>>>>> fe32d71a834a3d61cd0f3d4a54aecc37be074d87
 			print("ERROR: MACRO no declarada")
 			enaux=0
 			sys.exit(0)
 
+		enaux = 0
+		return 2
     
-
 #Función que cambia las referencias de los argumentos
 def BusqALA(linea):
 	#Se hace global para que se pueda ocupar en la funcion
