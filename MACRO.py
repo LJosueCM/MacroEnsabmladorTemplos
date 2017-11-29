@@ -40,10 +40,12 @@ def Ver_Macro(linea):
 	#Si find regresa un -1 es que no está en la linea
 	if encont != -1:
 		return 2
+	else:
 		if enaux==1: 
 			print("ERROR: MEND no declarada")
 		else: 
 			print("ERROR: MACRO no declarada")
+			enaux=0
 			sys.exit(0)
 
     
