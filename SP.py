@@ -1,3 +1,5 @@
+#Se importan las funciones del sistema operativo para poder borar archivos
+import os
 #Funcion que busca la macro en la MNT
 def Busca(linea, lista_MNT):
 
@@ -55,7 +57,15 @@ def Vacia(lista_aux, lista_MDT, contMDT, archivo_entrada):
 		
 		return 0
 
+<<<<<<< HEAD
 		#Ciclo desde j hasta terminar de leer aux_ALA 
+=======
+		op = linea[1].find(":\tMACRO")
+		if op != -1:
+			print(">> Error: Falta MEND\n")
+			return -1 
+
+>>>>>>> 298ba82807227a41b69691287a9cc0b45de10ab6
 		for j in range(len(aux_ALA)):
 
 			#A partir de la pocision 1 de la linea busca & concatenado con 
@@ -109,7 +119,11 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 
 	#En el archivo original se rempleza "." por "ME."
 	archivo_original = archivo_original.replace(".", "ME.")
+<<<<<<< HEAD
 	#Se abre en modo lectura el archivio que sera de salida
+=======
+	nombre = archivo_original
+>>>>>>> 298ba82807227a41b69691287a9cc0b45de10ab6
 	archivo_salida = open("MacroEnsamble.ASM", "r")
 	#Se abre en modo de escritura el archivo original 
 	archivo_entrada = open(archivo_original, "w")
@@ -140,6 +154,12 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 		#Si la variable es distinta de cero, escribe la linea en el archivo de entrada
 		if es != 0: 
 			archivo_entrada.write(linea)
+		elif es == -1:
+			archivo_original.close()
+			os.remove(nombre)
+			archivo_salida.close()
+			os.remove("MacroEnsamble.ASM")
+			return -1
 
 		#Inicia de nuevo con uno la variable. 
 		es = 1
@@ -161,4 +181,5 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 	archivo_MDT.close()
 	archivo_MNT.close()
 	archivo_ALA.close()
+	archivo_original.close()
 	return 
