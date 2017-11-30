@@ -15,25 +15,41 @@ def Actualiza(linea, lista_ALA, contIni):
 	return lista_aux
 
 def Vacia(lista_aux, lista_MDT, contMDT, archivo_entrada):
-	linea = lista_MDT[contMDT]
-	#op = linea.find("MACRO")
-	#print(linea)
-	#print(op)
-	#while op != -1:
-	#	print(linea)
-	#	contMDT += 1
-	#	linea = lista_MDT[contMDT]
-	#	op = linea.find("MACRO")
-	#	if op != -1:
-	#		return
+	aux_ALA = []
+	for i in range(len(lista_aux)):
+		cadena = lista_aux[i]
+		aux_ALA.append(cadena.split("|"))
 
-	#archivo_salida.write("Hola")
-	return
+	linea = lista_MDT[contMDT]
+	linea = linea.split("|")
+	while True:
+		op = linea[1].find("MACRO")
+		if op != -1:
+			return 0
+
+		for j in range(len(aux_ALA)):
+			om = linea[1].find("&"+aux_ALA[j][0])
+			if om != -1:
+				linea[1] = linea[1].replace("&"+aux_ALA[j][0], aux_ALA[j][2])
+
+		
+		archivo_entrada.write(linea[1])
+		
+		contMDT += 1
+
+		if contMDT == len(lista_MDT):
+			return 0
+
+		linea = lista_MDT[contMDT]
+		linea = linea.split("|")
+			
+	return 1
 
 #Funcion que realiza la segunda pasada del macroensamblador
 def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 	global pos
 	cont = 0
+	es = 1
 	archivo_original = archivo_original.replace(".", "ME.")
 	archivo_salida = open("MacroEnsamble.ASM", "r")
 	archivo_entrada = open(archivo_original, "w")
@@ -48,8 +64,12 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 			linea_aux = linea_aux.strip("\n\t")
 			linea_aux = linea_aux.replace(" ", "")
 			lista_aux = Actualiza(linea_aux, lista_ALA, int(arr[3]))
-			Vacia(lista_aux, lista_MDT, int(arr[2])-1, archivo_entrada)
-		archivo_entrada.write(linea)
+			es = Vacia(lista_aux, lista_MDT, int(arr[2]), archivo_entrada)
+		
+		if es != 0: 
+			archivo_entrada.write(linea)
+
+		es = 1
 
 
 	archivo_salida.close()

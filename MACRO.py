@@ -43,28 +43,15 @@ def Ver_Macro(linea):
 	#Se busca si en la linea se ha escrito un MEND
 	encont = linea.find("MEND")
 	#Si find regresa un -1 es que no está en la linea
-	if encont != -1:
-<<<<<<< HEAD
-		return 2
-	else:
-		if enaux==1: 
-			print("ERROR: MEND no declarada")
-		else: 
-=======
+	if encont != -1: 
 		#Se verifica que antes se haya declarado MEND
 		if enaux != 1:  
->>>>>>> fe32d71a834a3d61cd0f3d4a54aecc37be074d87
 			print("ERROR: MACRO no declarada")
-<<<<<<< HEAD
 			#Se manda un -1 que significa un error
 			return -1
 		#Se pone la bandera en cero si se encontro el MEND
-=======
-			enaux=0
-			sys.exit(0)
+		enaux=0
 
->>>>>>> f7eb4ddee3d84aa24ddad5783bcb624f9a320b29
-		enaux = 0
 		#Se regresa la opcion de encontrado MEND
 		return 2
     
