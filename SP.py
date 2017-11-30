@@ -45,6 +45,14 @@ def Vacia(lista_aux, lista_MDT, contMDT, archivo_entrada):
 			
 	return 1
 
+def EscribirArch(file, lista, op):
+	if op == 0:
+		for i in range(len(lista)):
+			file.write(lista[i])
+	else:
+		for i in range(len(lista)):
+			file.write(lista[i]+"\n")
+
 #Funcion que realiza la segunda pasada del macroensamblador
 def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 	global pos
@@ -71,7 +79,21 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 
 		es = 1
 
+	#Archivo que contiene las macro definiciones
+	archivo_MDT = open("MDT.txt", "w")
+	#Archivo donde esta la tabla con los nombres de las macro definiciones
+	archivo_MNT = open("MNT.txt", "w")
+	#Se crea el archivo ALA
+	archivo_ALA = open("ALA.txt", "w")
 
+	EscribirArch(archivo_MDT, lista_MDT, 0)
+	EscribirArch(archivo_MNT, lista_MNT, 1)
+	EscribirArch(archivo_ALA, lista_ALA, 1)
+
+	#Cierre de archivos
 	archivo_salida.close()
 	archivo_entrada.close()
-	return lista_ALA
+	archivo_MDT.close()
+	archivo_MNT.close()
+	archivo_ALA.close()
+	return 

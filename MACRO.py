@@ -218,12 +218,6 @@ if len(sys.argv) == 2:
 		#Se termina el programa
 		sys.exit(0)
 
-	#Archivo que contiene las macro definiciones
-	archivo_MDT = open("MDT.txt", "w")
-	#Archivo donde esta la tabla con los nombres de las macro definiciones
-	archivo_MNT = open("MNT.txt", "w")
-	#Se crea el archivo ALA
-	archivo_ALA = open("ALA.txt", "w")
 	#Se crea un archivo donde se va a guardar el código sin MACROS
 	archivo_f = open("MacroEnsamble.ASM", "w")
 
@@ -271,11 +265,6 @@ if len(sys.argv) == 2:
 
 	#Llama a la función que empieza la segunda pasada del archivo
 	SP.SegundaPasada(lista_ALA, lista_MDT, lista_MNT, sys.argv[1])
-
-	#Cierre de archivos
-	archivo_MDT.close()
-	archivo_MNT.close()
-	archivo_ALA.close()
 else:
 	#Mensaje de error si no se ingresa el archivo
 	if len(sys.argv) < 2:
