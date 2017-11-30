@@ -1,0 +1,14 @@
+INICIO:	INC A
+
+
+
+		AQUI 3
+
+
+
+			Y0000: DB 0FFH
+
+
+
+		END INICIO
+
