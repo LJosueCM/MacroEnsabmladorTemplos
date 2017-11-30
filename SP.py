@@ -1,3 +1,5 @@
+#Se importan las funciones del sistema operativo para poder borar archivos
+import os
 #Funcion que busca la macro en la MNT
 def Busca(linea, lista_MNT):
 	for i in range(len(lista_MNT)):
@@ -26,6 +28,11 @@ def Vacia(lista_aux, lista_MDT, contMDT, archivo_entrada):
 		op = linea[1].find("MACRO")
 		if op != -1:
 			return 0
+
+		op = linea[1].find(":\tMACRO")
+		if op != -1:
+			print(">> Error: Falta MEND\n")
+			return -1 
 
 		for j in range(len(aux_ALA)):
 			om = linea[1].find("&"+aux_ALA[j][0])
@@ -59,6 +66,7 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 	cont = 0
 	es = 1
 	archivo_original = archivo_original.replace(".", "ME.")
+	nombre = archivo_original
 	archivo_salida = open("MacroEnsamble.ASM", "r")
 	archivo_entrada = open(archivo_original, "w")
 	while True:
@@ -76,6 +84,12 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 		
 		if es != 0: 
 			archivo_entrada.write(linea)
+		elif es == -1:
+			archivo_original.close()
+			os.remove(nombre)
+			archivo_salida.close()
+			os.remove("MacroEnsamble.ASM")
+			return -1
 
 		es = 1
 
@@ -96,4 +110,5 @@ def SegundaPasada(lista_ALA, lista_MDT, lista_MNT, archivo_original):
 	archivo_MDT.close()
 	archivo_MNT.close()
 	archivo_ALA.close()
+	archivo_original.close()
 	return 
