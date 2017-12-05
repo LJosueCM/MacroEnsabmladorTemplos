@@ -1,0 +1,11 @@
+1|MACRO &1, &2
+2|	EX&1&2:	MACRO
+3|						PUSH &1
+4|						PUSH &2
+5|						POP &1
+6|						POP &2
+7|MACRO
+8|						PUSH &1
+9|						PUSH &2
+10|						POP &1
+11|						POP &2
